@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.data.Result
 import com.example.storyapp.databinding.ActivitySignupBinding
@@ -37,6 +38,7 @@ class SignupActivity : AppCompatActivity() {
                     is Result.Success -> {
                         showLoading(false)
                         showToast(result.data.message)
+                        showDialog(email)
                     }
 
                     is Result.Error -> {
@@ -45,6 +47,18 @@ class SignupActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun showDialog(email: String){
+        AlertDialog.Builder(this).apply {
+            setTitle("Yeah!")
+            setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
+            setPositiveButton("Lanjut") { _, _ ->
+                finish()
+            }
+            create()
+            show()
         }
     }
 
