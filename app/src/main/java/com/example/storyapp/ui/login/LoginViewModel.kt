@@ -16,9 +16,7 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
         emit(Result.Loading)
         try {
             val successResponse = userRepository.loginUser(email, password)
-            val user = successResponse.loginResult
-            saveSession(user)
-            emit(Result.Success(successResponse.message))
+            emit(Result.Success(successResponse))
         } catch (e : HttpException){
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, LoginResponse::class.java)
@@ -27,7 +25,7 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
         }
     }
 
-    private fun saveSession(user: LoginResult){
+    fun saveSession(user: LoginResult){
         viewModelScope.launch {
             userRepository.saveSessionUser(user)
         }

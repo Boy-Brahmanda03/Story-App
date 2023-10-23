@@ -1,13 +1,13 @@
 package com.example.storyapp.data
 
-import com.example.storyapp.data.pref.PreferencesDataStore
+import com.example.storyapp.data.pref.UserPreferences
 import com.example.storyapp.data.remote.response.LoginResult
 import com.example.storyapp.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
     private val apiService: ApiService,
-    private val pref: PreferencesDataStore
+    private val pref: UserPreferences
 ) {
     suspend fun registerUser(name: String, email: String, password: String) = apiService.registerUser(name, email, password)
 
@@ -25,13 +25,17 @@ class UserRepository private constructor(
         pref.logout()
     }
 
+    suspend fun getAllStories(token: String) = apiService.getStories(token)
+
+
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
 
         fun getInstance(
             apiService: ApiService,
-            pref: PreferencesDataStore
+            pref: UserPreferences
         ): UserRepository =
             instance ?: synchronized(this) {
                 instance ?: UserRepository(apiService, pref)

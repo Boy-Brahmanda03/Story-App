@@ -38,7 +38,8 @@ class LoginActivity : AppCompatActivity() {
                     is Result.Loading -> showLoading(true)
                     is Result.Success -> {
                         showLoading(false)
-                        showToast(result.data)
+                        loginViewModel.saveSession(result.data.loginResult)
+                        showToast(result.data.message)
                         showDialog()
                     }
                     is Result.Error -> {
@@ -72,6 +73,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar3.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.progressBar4.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
