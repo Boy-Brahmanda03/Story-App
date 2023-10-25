@@ -1,6 +1,5 @@
 package com.example.storyapp.data
 
-import android.util.Log
 import androidx.lifecycle.liveData
 import com.example.storyapp.data.pref.UserModel
 import com.example.storyapp.data.pref.UserPreferences
@@ -48,7 +47,6 @@ class UserStoryRepository private constructor(
                     isLogin = true
                 )
                 saveSessionUser(user)
-                Log.d("REPO", "loginUser: $successResponse")
                 emit(Result.Success(successResponse))
             } else {
                 emit(Result.Error(successResponse.message))
@@ -73,10 +71,10 @@ class UserStoryRepository private constructor(
         pref.logout()
     }
 
-    fun getAllStories() = liveData {
+    fun getAllStories(token: String) = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getStories()
+            val response = apiService.getStories(token)
             if (response.error){
                 emit(Result.Error(response.message))
             } else {
@@ -90,10 +88,10 @@ class UserStoryRepository private constructor(
         }
     }
 
-    fun getDetailStory(id: String) = liveData {
+    fun getDetailStory(id: String, token: String) = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getDetailStories(id)
+            val response = apiService.getDetailStories(token, id)
             emit(Result.Success(response))
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
@@ -103,7 +101,7 @@ class UserStoryRepository private constructor(
     }
 
 
-    fun uploadStory(file: File, desc: String) = liveData {
+    fun uploadStory(file: File, desc: String, token: String) = liveData {
         emit(Result.Loading)
         try {
             val requestDesc = desc.toRequestBody("text/plain".toMediaType())
@@ -113,7 +111,7 @@ class UserStoryRepository private constructor(
                 file.name,
                 requestFile
             )
-            val response = apiService.uploadStory(multipartBody, requestDesc)
+            val response = apiService.uploadStory(token, multipartBody, requestDesc)
             emit(Result.Success(response.message))
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()

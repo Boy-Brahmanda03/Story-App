@@ -2,9 +2,11 @@ package com.example.storyapp.ui.uploadstory
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,9 +35,25 @@ class UploadActivity : AppCompatActivity() {
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val token = intent.getStringExtra(EXTRA_TOKEN).toString()
+
+        setupView()
+
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.cameraButton.setOnClickListener { startCamera() }
-        binding.uploadButton.setOnClickListener { uploadImage() }
+        binding.uploadButton.setOnClickListener { uploadImage(token) }
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
     }
 
     private fun startGallery() {
@@ -49,15 +67,15 @@ class UploadActivity : AppCompatActivity() {
             currentImageUri = uri
             showImage()
         } else {
-            Log.d("Photo Picker", "No media selected")
+            showToast(getString(R.string.no_media_selected))
         }
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(token: String) {
         currentImageUri?.let { uri ->
             val image: File = uriToFile(uri, this).reduceFileImage()
             val desc = binding.etDescription.text.toString()
-            uploadViewModel.uploadStory(image, desc).observe(this) { result ->
+            uploadViewModel.uploadStory(image, desc, token).observe(this) { result ->
                 if (result != null){
                     when(result){
                         is Result.Loading -> showLoading(true)
@@ -94,7 +112,6 @@ class UploadActivity : AppCompatActivity() {
 
     private fun showImage() {
         currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -104,6 +121,10 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val EXTRA_TOKEN = "extra_token"
     }
 }

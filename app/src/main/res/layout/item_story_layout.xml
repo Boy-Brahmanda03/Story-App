@@ -40,9 +40,10 @@
         <TextView
             android:id="@+id/tv_story_desctiption"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/poppins"
+            android:maxLines="1"
             android:text="@string/description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/tv_title"

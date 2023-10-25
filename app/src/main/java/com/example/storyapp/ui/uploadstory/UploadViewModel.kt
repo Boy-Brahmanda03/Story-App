@@ -7,5 +7,5 @@ import java.io.File
 class UploadViewModel(
     private val userStoryRepository: UserStoryRepository
 ) : ViewModel() {
-    fun uploadStory(file: File, desc: String) = userStoryRepository.uploadStory(file, desc)
+    fun uploadStory(file: File, desc: String, token: String) = userStoryRepository.uploadStory(file, desc, token)
 }

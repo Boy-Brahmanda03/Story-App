@@ -11,4 +11,22 @@
     <string name="description">Description</string>
     <string name="empty_image">Empty Image</string>
     <string name="story_image">Story Image</string>
+    <string name="logout">Logout</string>
+    <string name="setting">Setting</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_description">Login to your account!</string>
+    <string name="signup_description">Create your new account!</string>
+    <string name="welcome_title">Welcome to Dicoding!</string>
+    <string name="welcome_description">Want to learn Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and other IT fields? Just at Dicoding!</string>
+    <string name="welcome_image">Welcome Image</string>
+    <string name="upload_story">Upload Story</string>
+    <string name="detail_picture">Detail Picture</string>
+    <string name="title_detail">Title detail</string>
+    <string name="detail_description">Detail description</string>
+    <string name="dialog_login_title">Yeah!</string>
+    <string name="dialog_positive">Continue</string>
+    <string name="dialog_signup">The account with %1$s is ready. Come on, login and learn coding.</string>
+    <string name="dialog_login">You have successfully logged in. Can\'t wait to learn?</string>
+    <string name="signup_image">Signup Image</string>
+    <string name="no_media_selected">No media selected</string>
 </resources>

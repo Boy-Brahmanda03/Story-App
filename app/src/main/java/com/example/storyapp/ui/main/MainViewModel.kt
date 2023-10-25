@@ -9,12 +9,10 @@ import com.example.storyapp.data.pref.UserModel
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val userStoryRepository: UserStoryRepository) : ViewModel() {
-    fun getAllStories() = userStoryRepository.getAllStories()
-
+    fun getAllStories(token: String) = userStoryRepository.getAllStories(token)
     fun getSession(): LiveData<UserModel> {
         return userStoryRepository.getSession().asLiveData()
     }
-
     fun logout(){
         viewModelScope.launch {
             userStoryRepository.logout()
