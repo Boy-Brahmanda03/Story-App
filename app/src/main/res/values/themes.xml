@@ -1,9 +1,30 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.StoryApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/dark_beige</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/dark_beige</item>
+        <item name="colorOnPrimaryContainer">@color/darker_yellow</item>
+        <item name="colorSecondary">@color/dark_beige</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/gray</item>
+        <item name="colorOutline">@color/dark_beige</item>
+        <item name="colorSurfaceVariant">@color/dark_beige</item>
+        <item name="colorOnSurfaceVariant">@color/gray</item>
     </style>
-
+    <style name="Home.Theme" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/dark_beige</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/dark_beige</item>
+        <item name="colorOnPrimaryContainer">@color/darker_yellow</item>
+        <item name="colorSecondary">@color/dark_beige</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/gray</item>
+        <item name="colorOutline">@color/dark_beige</item>
+        <item name="colorSurfaceVariant">@color/dark_beige</item>
+        <item name="colorOnSurfaceVariant">@color/gray</item>
+    </style>
     <style name="Theme.StoryApp" parent="Base.Theme.StoryApp" />
 </resources>

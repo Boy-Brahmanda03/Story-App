@@ -39,6 +39,8 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_post_add_24" />
+        app:srcCompat="@drawable/baseline_post_add_24"
+        android:contentDescription="@string/upload_story"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

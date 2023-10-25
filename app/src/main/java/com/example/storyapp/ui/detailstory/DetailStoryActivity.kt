@@ -1,7 +1,11 @@
 package com.example.storyapp.ui.detailstory
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,13 +27,28 @@ class DetailStoryActivity : AppCompatActivity() {
         binding = ActivityDetailStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val storyId = intent.getStringExtra(EXTRA_STORY_ID).toString()
+        setupView()
 
-        getDetailStory(storyId)
+        val storyId = intent.getStringExtra(EXTRA_STORY_ID).toString()
+        val token = intent.getStringExtra(EXTRA_TOKEN).toString()
+        Log.d("Detail Activity", "getDetailStory: $token")
+        getDetailStory(storyId, token)
     }
 
-    private fun getDetailStory(storyId: String) {
-        detailStoryViewModel.getDetailStory(storyId).observe(this) { result ->
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+    }
+
+    private fun getDetailStory(storyId: String, token: String) {
+        detailStoryViewModel.getDetailStory(storyId, token).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> showLoading(true)
@@ -54,7 +73,6 @@ class DetailStoryActivity : AppCompatActivity() {
                 .load(detailResponse.photoUrl)
                 .into(ivDetailPicture)
             tvTitleDetail.text = detailResponse.name
-            tvCreatedAt.text = detailResponse.createdAt
             tvDetailDescription.text = detailResponse.description
         }
     }
@@ -70,5 +88,6 @@ class DetailStoryActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_STORY_ID = "extra_id_story"
+        const val EXTRA_TOKEN = "extra_token"
     }
 }

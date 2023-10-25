@@ -12,7 +12,6 @@ import com.example.storyapp.ui.signup.SignupViewModel
 import com.example.storyapp.ui.uploadstory.UploadViewModel
 
 class ViewModelFactory(private val repository: UserStoryRepository) : ViewModelProvider.NewInstanceFactory() {
-
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
