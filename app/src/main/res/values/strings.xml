@@ -5,4 +5,10 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="description">Description</string>
+    <string name="empty_image">Empty Image</string>
+    <string name="story_image">Story Image</string>
 </resources>

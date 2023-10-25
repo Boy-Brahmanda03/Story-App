@@ -3,13 +3,15 @@ package com.example.storyapp.ui
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.storyapp.data.UserRepository
+import com.example.storyapp.data.UserStoryRepository
 import com.example.storyapp.data.di.Injection
+import com.example.storyapp.ui.detailstory.DetailStoryViewModel
 import com.example.storyapp.ui.login.LoginViewModel
 import com.example.storyapp.ui.main.MainViewModel
 import com.example.storyapp.ui.signup.SignupViewModel
+import com.example.storyapp.ui.uploadstory.UploadViewModel
 
-class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val repository: UserStoryRepository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -22,6 +24,12 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(DetailStoryViewModel::class.java) -> {
+                DetailStoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UploadViewModel::class.java) -> {
+                UploadViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

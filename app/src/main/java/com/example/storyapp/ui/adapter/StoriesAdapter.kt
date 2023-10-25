@@ -10,14 +10,16 @@ import com.bumptech.glide.Glide
 import com.example.storyapp.data.remote.response.ListStoryItem
 import com.example.storyapp.databinding.ItemStoryLayoutBinding
 
-class StoriesAdapter() :
+class StoriesAdapter(
+    val onClick: (ListStoryItem) -> Unit
+) :
     ListAdapter<ListStoryItem, StoriesAdapter.StoriesViewHolder>(DIFF_CALLBACK) {
 
     class StoriesViewHolder(private val binding: ItemStoryLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(story: ListStoryItem) {
             binding.tvTitle.text = story.name
-            binding.tvDescription.text = story.description
+            binding.tvStoryDesctiption.text = story.description
             Glide.with(binding.root)
                 .load(story.photoUrl)
                 .into(binding.ivPicture)
@@ -33,6 +35,9 @@ class StoriesAdapter() :
     override fun onBindViewHolder(holder: StoriesViewHolder, position: Int) {
         val story = getItem(position)
         holder.bind(story)
+        holder.itemView.setOnClickListener {
+            onClick(story)
+        }
     }
 
     companion object {

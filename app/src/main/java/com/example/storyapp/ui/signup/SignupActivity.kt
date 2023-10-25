@@ -40,7 +40,6 @@ class SignupActivity : AppCompatActivity() {
                         showToast(result.data.message)
                         showDialog(email)
                     }
-
                     is Result.Error -> {
                         showLoading(false)
                         showToast(result.error)

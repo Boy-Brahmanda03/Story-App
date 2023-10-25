@@ -2,6 +2,7 @@ package com.example.storyapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -12,6 +13,8 @@ import com.example.storyapp.data.remote.response.ListStoryItem
 import com.example.storyapp.databinding.ActivityMainBinding
 import com.example.storyapp.ui.ViewModelFactory
 import com.example.storyapp.ui.adapter.StoriesAdapter
+import com.example.storyapp.ui.detailstory.DetailStoryActivity
+import com.example.storyapp.ui.uploadstory.UploadActivity
 import com.example.storyapp.ui.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
@@ -26,25 +29,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.rvStories.layoutManager = layoutManager
-
         mainViewModel.getSession().observe(this) { user ->
+            Log.d("Main Activity", "session: ${user.token} ")
             if (!user.isLogin) {
                 val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+                Log.d("Main Activity", "not login: ${user.token} ")
+
                 startActivity(welcomeIntent)
                 finish()
             } else {
-                getAllStories("Bearer ${user.token}")
+                getAllStories()
+                Log.d("Main Activity", "login: ${user.token} ")
             }
         }
 
-
+        binding.floatingActionButton.setOnClickListener {
+            val uploadIntent = Intent(this, UploadActivity::class.java)
+            startActivity(uploadIntent)
+        }
     }
-
-    private fun getAllStories(token: String){
-
-        mainViewModel.getAllStories(token).observe(this) { result ->
+    private fun getAllStories(){
+        mainViewModel.getAllStories().observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> showLoading(true)
@@ -63,7 +68,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setStoriesData(stories: List<ListStoryItem>) {
-        val adapter = StoriesAdapter()
+        val linearLayout = LinearLayoutManager(this)
+        binding.rvStories.apply {
+            setHasFixedSize(true)
+            layoutManager = linearLayout
+        }
+        val adapter = StoriesAdapter{
+            val detailIntent = Intent(this, DetailStoryActivity::class.java)
+            detailIntent.putExtra(DetailStoryActivity.EXTRA_STORY_ID, it.id)
+            startActivity(detailIntent)
+        }
         adapter.submitList(stories)
         binding.rvStories.adapter = adapter
     }

@@ -14,6 +14,19 @@ data class StoriesResponse(
 	val message: String
 )
 
+data class DetailStoryResponse(
+
+	@field:SerializedName("error")
+	val error: Boolean,
+
+	@field:SerializedName("message")
+	val message: String,
+
+	@field:SerializedName("story")
+	val story: ListStoryItem
+)
+
+
 data class ListStoryItem(
 
 	@field:SerializedName("id")
@@ -31,10 +44,17 @@ data class ListStoryItem(
 	@field:SerializedName("createdAt")
 	val createdAt: String,
 
-
 	@field:SerializedName("lon")
 	val lon: Double? = null,
 
 	@field:SerializedName("lat")
 	val lat: Double? = null
+)
+
+data class UploadStoryResponse(
+	@field:SerializedName("error")
+	val error: Boolean,
+
+	@field:SerializedName("message")
+	val message: String
 )

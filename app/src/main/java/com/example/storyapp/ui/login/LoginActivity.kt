@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.data.Result
+import com.example.storyapp.data.pref.UserModel
 import com.example.storyapp.databinding.ActivityLoginBinding
 import com.example.storyapp.ui.ViewModelFactory
 import com.example.storyapp.ui.main.MainActivity
@@ -33,27 +34,35 @@ class LoginActivity : AppCompatActivity() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
         loginViewModel.loginUser(email, password).observe(this) { result ->
-            if (result != null){
-                when(result){
+            if (result != null) {
+                when (result) {
                     is Result.Loading -> showLoading(true)
+
                     is Result.Success -> {
                         showLoading(false)
-                        loginViewModel.saveSession(result.data.loginResult)
+                        val user = result.data.loginResult
+                        val userModel = UserModel(
+                            user.name,
+                            user.userId,
+                            user.token
+                        )
+                        loginViewModel.saveSession(userModel)
                         showToast(result.data.message)
                         showDialog()
                     }
+
                     is Result.Error -> {
                         showLoading(false)
                         showToast(result.error)
                     }
-                }
 
+                }
             }
 
         }
     }
 
-    private fun showDialog(){
+    private fun showDialog() {
         AlertDialog.Builder(this).apply {
             setTitle("Yeah!")
             setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")

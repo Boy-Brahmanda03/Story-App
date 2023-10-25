@@ -7,7 +7,6 @@
     tools:context=".ui.welcome.WelcomeActivity">
 
     <ImageView
-        android:id="@+id/iv_welcome"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
