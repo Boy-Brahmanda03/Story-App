@@ -45,10 +45,10 @@ data class ListStoryItem(
 	val createdAt: String,
 
 	@field:SerializedName("lon")
-	val lon: Double? = null,
+	val lon: Double,
 
 	@field:SerializedName("lat")
-	val lat: Double? = null
+	val lat: Double
 )
 
 data class UploadStoryResponse(
