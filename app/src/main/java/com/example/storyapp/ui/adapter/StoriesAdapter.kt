@@ -3,6 +3,7 @@ package com.example.storyapp.ui.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -40,6 +41,8 @@ class StoriesAdapter(
                     Pair(binding.tvTitle, "name"),
                     Pair(binding.tvStoryDesctiption, "description")
                 )
+
+                Log.d("TAG", "bind: $story")
 
                 itemView.context.startActivity(detailIntent, activityOptionsCompat.toBundle())
             }

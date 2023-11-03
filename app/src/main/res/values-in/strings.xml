@@ -30,4 +30,7 @@
     <string name="dialog_signup">Akun dengan %1$s sudah jadi nih. Yuk, login dan belajar coding.</string>
     <string name="signup_image">Gambar Daftar</string>
     <string name="no_media_selected">Tidak ada gambar terpilih!</string>
+    <string name="maps">Peta</string>
+    <string name="style_parsing_failed">Parsing gaya gagal</string>
+    <string name="can_t_find_style">Tidak dapat menemukan style</string>
 </resources>

@@ -88,6 +88,23 @@ class UserStoryRepository private constructor(
         }
     }
 
+    fun getAllStoriesWithLocation(token: String) = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getStoriesWithLocation(token)
+            if (response.error){
+                emit(Result.Error(response.message))
+            } else {
+                emit(Result.Success(response))
+            }
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, StoriesResponse::class.java)
+            val errorMessage = errorBody.message
+            emit(Result.Error(errorMessage))
+        }
+    }
+
     fun getDetailStory(id: String, token: String) = liveData {
         emit(Result.Loading)
         try {

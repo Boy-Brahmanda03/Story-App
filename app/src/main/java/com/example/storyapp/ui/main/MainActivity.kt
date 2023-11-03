@@ -19,6 +19,7 @@ import com.example.storyapp.data.remote.response.ListStoryItem
 import com.example.storyapp.databinding.ActivityMainBinding
 import com.example.storyapp.ui.ViewModelFactory
 import com.example.storyapp.ui.adapter.StoriesAdapter
+import com.example.storyapp.ui.mapstory.MapsActivity
 import com.example.storyapp.ui.uploadstory.UploadActivity
 import com.example.storyapp.ui.welcome.WelcomeActivity
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(application)
     }
+    private lateinit var userToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             } else {
                 binding.mainLayout.visibility = View.VISIBLE
-                val userToken = "Bearer ${user.token}"
+                userToken = "Bearer ${user.token}"
                 getAllStories(userToken)
                 binding.floatingActionButton.setOnClickListener {
                     uploadImage(userToken)
@@ -61,6 +63,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_setting -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
+
+            R.id.menu_maps -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra(MapsActivity.EXTRA_TOKEN, userToken)
+                startActivity(intent)
             }
 
             R.id.menu_logout -> {
