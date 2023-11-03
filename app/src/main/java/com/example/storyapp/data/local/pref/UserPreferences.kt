@@ -1,4 +1,4 @@
-package com.example.storyapp.data.pref
+package com.example.storyapp.data.local.pref
 
 import android.content.Context
 import android.util.Log

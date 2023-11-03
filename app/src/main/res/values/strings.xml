@@ -33,4 +33,5 @@
     <string name="maps">Maps</string>
     <string name="style_parsing_failed">Style parsing failed.</string>
     <string name="can_t_find_style">Can\'t find style.</string>
+    <string name="retry">Retry</string>
 </resources>

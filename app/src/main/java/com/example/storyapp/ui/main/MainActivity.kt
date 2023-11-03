@@ -14,10 +14,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storyapp.R
-import com.example.storyapp.data.Result
-import com.example.storyapp.data.remote.response.ListStoryItem
 import com.example.storyapp.databinding.ActivityMainBinding
 import com.example.storyapp.ui.ViewModelFactory
+import com.example.storyapp.ui.adapter.LoadingStateAdapter
 import com.example.storyapp.ui.adapter.StoriesAdapter
 import com.example.storyapp.ui.mapstory.MapsActivity
 import com.example.storyapp.ui.uploadstory.UploadActivity
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.mainLayout.visibility = View.VISIBLE
                 userToken = "Bearer ${user.token}"
-                getAllStories(userToken)
+                setStoriesData(userToken)
                 binding.floatingActionButton.setOnClickListener {
                     uploadImage(userToken)
                 }
@@ -101,36 +100,21 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getAllStories(token: String) {
-        mainViewModel.getAllStories(token).observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> showLoading(true)
-
-                    is Result.Success -> {
-                        showLoading(false)
-                        showToast(result.data.message)
-                        setStoriesData(result.data.listStory, token)
-                    }
-
-                    is Result.Error -> {
-                        showLoading(false)
-                        showToast(result.error)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setStoriesData(stories: List<ListStoryItem>, token: String) {
+    private fun setStoriesData(token: String) {
         val linearLayout = LinearLayoutManager(this)
         binding.rvStories.apply {
             setHasFixedSize(true)
             layoutManager = linearLayout
         }
         val adapter = StoriesAdapter(token)
-        adapter.submitList(stories)
-        binding.rvStories.adapter = adapter
+        binding.rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+        mainViewModel.getAllStories(token).observe(this) {
+            adapter.submitData(lifecycle, it)
+        }
     }
 
     private fun showToast(message: String) {

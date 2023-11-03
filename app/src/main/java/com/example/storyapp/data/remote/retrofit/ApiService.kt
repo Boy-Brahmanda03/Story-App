@@ -25,6 +25,7 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): RegisterResponse
+
     @FormUrlEncoded
     @POST("login")
     suspend fun loginUser(
@@ -43,7 +44,9 @@ interface ApiService {
     @GET("stories")
     suspend fun getStories(
         @Header("Authorization") token: String,
-        @Query("location") location: Int = 1
+        @Query("location") location: Int = 1,
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 15
     ): StoriesResponse
 
     @GET("stories/{id}")

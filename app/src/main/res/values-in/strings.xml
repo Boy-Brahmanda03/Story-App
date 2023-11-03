@@ -33,4 +33,5 @@
     <string name="maps">Peta</string>
     <string name="style_parsing_failed">Parsing gaya gagal</string>
     <string name="can_t_find_style">Tidak dapat menemukan style</string>
+    <string name="retry">Coba lagi</string>
 </resources>
