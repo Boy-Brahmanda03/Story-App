@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -97,7 +96,6 @@ class MainActivity : AppCompatActivity() {
         val uploadIntent = Intent(this, UploadActivity::class.java)
         uploadIntent.putExtra(UploadActivity.EXTRA_TOKEN, token)
         startActivity(uploadIntent)
-
     }
 
     private fun setStoriesData(token: String) {
@@ -115,13 +113,5 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getAllStories(token).observe(this) {
             adapter.submitData(lifecycle, it)
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

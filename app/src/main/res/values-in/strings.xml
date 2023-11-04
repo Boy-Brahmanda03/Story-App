@@ -34,4 +34,6 @@
     <string name="style_parsing_failed">Parsing gaya gagal</string>
     <string name="can_t_find_style">Tidak dapat menemukan style</string>
     <string name="retry">Coba lagi</string>
+    <string name="failed_to_get_location">Gagal mendapatkan lokasi</string>
+    <string name="share_your_location">Bagikan lokasi</string>
 </resources>

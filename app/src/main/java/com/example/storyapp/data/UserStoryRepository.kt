@@ -125,17 +125,19 @@ class UserStoryRepository private constructor(
     }
 
 
-    fun uploadStory(file: File, desc: String, token: String) = liveData {
+    fun uploadStory(file: File, desc: String, token: String, long: Float?, lat: Float?) = liveData {
         emit(Result.Loading)
         try {
             val requestDesc = desc.toRequestBody("text/plain".toMediaType())
+            val requestLong = long.toString().toRequestBody("text/plain".toMediaType())
+            val requestLat = lat.toString().toRequestBody("text/plain".toMediaType())
             val requestFile = file.asRequestBody("image/jpeg".toMediaType())
             val multipartBody = MultipartBody.Part.createFormData(
                 "photo",
                 file.name,
                 requestFile
             )
-            val response = apiService.uploadStory(token, multipartBody, requestDesc)
+            val response = apiService.uploadStory(token, multipartBody, requestDesc, requestLong, requestLat)
             emit(Result.Success(response.message))
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()

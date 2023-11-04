@@ -34,4 +34,6 @@
     <string name="style_parsing_failed">Style parsing failed.</string>
     <string name="can_t_find_style">Can\'t find style.</string>
     <string name="retry">Retry</string>
+    <string name="failed_to_get_location">Failed to Get Location</string>
+    <string name="share_your_location">Share your location</string>
 </resources>
