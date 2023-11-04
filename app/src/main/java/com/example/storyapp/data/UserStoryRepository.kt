@@ -9,8 +9,8 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.storyapp.data.local.pref.UserModel
 import com.example.storyapp.data.local.pref.UserPreferences
-import com.example.storyapp.data.local.room.entity.StoriesEntity
 import com.example.storyapp.data.local.room.StoryDatabase
+import com.example.storyapp.data.local.room.entity.StoriesEntity
 import com.example.storyapp.data.remote.response.DetailStoryResponse
 import com.example.storyapp.data.remote.response.LoginResponse
 import com.example.storyapp.data.remote.response.RegisterResponse
@@ -80,8 +80,8 @@ class UserStoryRepository private constructor(
         pref.logout()
     }
 
-    @OptIn(ExperimentalPagingApi::class)
     fun getAllStories(token: String): LiveData<PagingData<StoriesEntity>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = 5
